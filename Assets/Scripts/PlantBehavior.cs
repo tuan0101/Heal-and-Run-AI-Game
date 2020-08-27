@@ -84,7 +84,6 @@ public class PlantBehavior : InteractableBehavior
     {
         if(other.gameObject.CompareTag("SingSphere"))
         {
-            print("found the player");
             Activate();
             other.gameObject.GetComponentInParent<PlayerController>().managerBehavior.target = this.gameObject;
         }

@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody rb;
     public float speed = 50f;
-    public float rotateSpeed = 3f;
 
     bool singing = false;
     public GameObject ParticalManager;
@@ -64,31 +63,26 @@ public class PlayerController : MonoBehaviour
         {
             
             rb.MovePosition(rb.position + Movement * speed * Time.deltaTime);
-            //if (transform != null)
-            //{
-            //    transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed, 0);
-            //    var forward = transform.TransformDirection(Vector3.forward);
-            //    float curSpeed = speed * Input.GetAxis("Vertical");
-            //    controller.SimpleMove(forward * curSpeed);
-
-            //}
         }
        
     }
     private void sing()
     {
+        
         if (Input.GetAxisRaw("Interact") != 0)
         {
             if(singing == false)
             {
                 audioSource.Play();
-
+                anim.SetBool("isSing", true);
+               
             }
            
             singRange.SetActive(true);
             singing = true;
 
             ParticalManager.SetActive(true);
+            
 
         }
         else
@@ -98,8 +92,12 @@ public class PlayerController : MonoBehaviour
             singing = false;
             singRange.SetActive(false);
             ParticalManager.SetActive(false);
+            anim.SetBool("isSing", false);
         }
        
     }
+
+    // Make this parent always look at the child rotation
+
     
 }
