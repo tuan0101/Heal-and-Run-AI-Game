@@ -8,25 +8,26 @@ using UnityEngine.AI;
 public class MonsterAI : MonoBehaviour
 {
 
-    //Common Variables
+    [SerializeField] GameObject terrain;
+
     GameObject target;
     GameObject flower;
 
+    MeshCollider col;
 
-    //For Patrol
-    public Transform[] points;
-    int TransPoints = 0;
-    public float viewDistance;
-    public LayerMask viewMask;
-    float viewAngle;
+    public float viewDistance; 
     public Light spotLight;
 
     [HideInInspector]
     public NavMeshAgent agent;
-    //For Chase
-    [SerializeField] float chaseRange = 150f;
+
+    // For chasing
+    [SerializeField] float chaseRange = 50f;
+    float transfromRange = 12f;
     float distanceToTarget = Mathf.Infinity;
     float distanceToFlower = Mathf.Infinity;
+    float minX, maxX, minZ, maxZ;
+    float viewAngle;
 
     //Need Behaviors for Attack and Suspiscion
     [SerializeField] float suspiscionTime = 0f;
@@ -35,6 +36,8 @@ public class MonsterAI : MonoBehaviour
     // enemy starting position
     Vector3 enemyPos;
     Vector3 roamPos;
+
+    Animator roboAnim;
 
 
     // Start is called before the first frame update
@@ -47,9 +50,15 @@ public class MonsterAI : MonoBehaviour
         enemyPos = this.transform.position;
         roamPos = GetRoamingPos();
 
-        // Disabling auto-braking allows for continuous movement
-        // between points (ie, the agent doesn't slow down as it
-        // approaches a destination point).
+        roboAnim = GetComponentInChildren<Animator>();
+
+        col = terrain.GetComponent<MeshCollider>();
+
+        // cannot call col.bounds in update()
+        minX = col.bounds.min.x;
+        maxX = col.bounds.max.x;
+        minZ = col.bounds.min.z;
+        maxZ = col.bounds.max.z;
     }
 
 
@@ -60,7 +69,7 @@ public class MonsterAI : MonoBehaviour
 
         if (InChaseRange())
         {
-            EngageDurin();
+            EngageDruid();
         }
         //else if (InFlowerRange())
         //{
@@ -90,11 +99,7 @@ public class MonsterAI : MonoBehaviour
 
             if (angleBetweenGuardAndPlayer < viewAngle)
             {
-                
-                if (!Physics.Linecast(transform.position, target.transform.position, viewMask))
-                {
-                    return true;
-                }
+                return true;
             }
         }
         return false;
@@ -132,20 +137,6 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-    private void PatrolArea()
-    {
-        // Returns if no points have been set up
-        if (points.Length == 0)
-            return;
-
-        // Set the agent to go to the currently selected destination.
-        agent.destination = points[TransPoints].position;
-
-        // Choose the next point in the array as the destination,
-        // cycling to the start if necessary.
-        TransPoints = (TransPoints + 1) % points.Length;
-    }
-
     private bool InAttackRange()
     {
 
@@ -154,8 +145,7 @@ public class MonsterAI : MonoBehaviour
 
     }
 
-
-    private void EngageDurin()
+    private void EngageDruid()
     {
 
         if (distanceToTarget > agent.stoppingDistance)
@@ -180,6 +170,16 @@ public class MonsterAI : MonoBehaviour
     private void ChaseDurin()
     {
         agent.SetDestination(target.transform.position);
+
+        distanceToTarget = Vector3.Distance(target.transform.position, transform.position);
+        if( distanceToTarget < transfromRange)
+        {
+            roboAnim.SetInteger("Robo", 1);
+        }else
+        {
+            roboAnim.SetInteger("Robo", 2);
+        }            
+        
     }
 
     void OnDrawGizmosSelected()
@@ -191,7 +191,10 @@ public class MonsterAI : MonoBehaviour
 
     private Vector3 GetRoamingPos()
     {
-        return enemyPos + GetRandomDir() * UnityEngine.Random.Range(10f, 70f);
+        Vector3 randomPos = enemyPos + GetRandomDir() * UnityEngine.Random.Range(10f, 70f);
+        // prevent the Robo move outside the terrain     
+        randomPos = new Vector3(Mathf.Clamp(randomPos.x, minX, maxX), randomPos.y, Mathf.Clamp(randomPos.z, minZ, maxZ));
+        return randomPos;
     }
 
     private Vector3 GetRandomDir()
@@ -201,9 +204,10 @@ public class MonsterAI : MonoBehaviour
 
     private void Roaming()
     {
+        roboAnim.SetInteger("Robo", 2);
         // Set the agent to go to the roam position.
         agent.SetDestination(roamPos);
-        float reachedPosDistance = 10f;
+        float reachedPosDistance = 3f;
 
         // if reached roam position, generate a new roam position
         if (Vector3.Distance(transform.position, roamPos) < reachedPosDistance)

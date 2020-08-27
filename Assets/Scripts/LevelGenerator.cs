@@ -20,8 +20,8 @@ public class LevelGenerator : MonoBehaviour
     void Start()
     {
         col = terrain.GetComponent<MeshCollider>();
-        GenerateTree(treeTypes, NumOfTrees);
-        GenerateTree(treeTypes, NumOfGrass);
+        GeneratePlants(treeTypes, NumOfTrees);
+        GeneratePlants(grassTypes, NumOfGrass);
         StartCoroutine(MonsterWillAppear(NumOfMonsters));
     }
 
@@ -38,7 +38,7 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    private void GenerateTree(GameObject[] trees, int amount)
+    private void GeneratePlants(GameObject[] trees, int amount)
     {
        for(int i = 0; i < amount; i++)
         {
@@ -48,15 +48,15 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    private void GenerateGrass(GameObject[] grass, int amount)
-    {
-        for (int i = 0; i < amount; i++)
-        {
-            Vector3 randomPoint = GetRandomPoint();
-            GameObject spwn = grass[UnityEngine.Random.Range(0, grass.Length - 1)];
-            Instantiate(spwn, randomPoint, Quaternion.identity);
-        }
-    }
+    //private void GenerateGrass(GameObject[] grass, int amount)
+    //{
+    //    for (int i = 0; i < amount; i++)
+    //    {
+    //        Vector3 randomPoint = GetRandomPoint();
+    //        GameObject spwn = grass[UnityEngine.Random.Range(0, grass.Length - 1)];
+    //        Instantiate(spwn, randomPoint, Quaternion.identity);
+    //    }
+    //}
 
     Vector3 GetRandomPoint()
     {
