@@ -9,6 +9,8 @@ public class MonsterAI : MonoBehaviour
 {
 
     [SerializeField] GameObject terrain;
+    [SerializeField] GameObject projectilePrefab;
+    [SerializeField] GameObject firePoint;
 
     GameObject target;
     GameObject flower;
@@ -23,15 +25,14 @@ public class MonsterAI : MonoBehaviour
 
     // For chasing
     [SerializeField] float chaseRange = 50f;
-    float transfromRange = 12f;
+    float attackRange = 8f;
+    float fireRate = 1f;
+    float fireDelay = 1f;
+    float transfromRange = 13f;
     float distanceToTarget = Mathf.Infinity;
     float distanceToFlower = Mathf.Infinity;
     float minX, maxX, minZ, maxZ;
     float viewAngle;
-
-    //Need Behaviors for Attack and Suspiscion
-    [SerializeField] float suspiscionTime = 0f;
-    float timeSinceLastSawPlayer = Mathf.Infinity;
 
     // enemy starting position
     Vector3 enemyPos;
@@ -89,20 +90,33 @@ public class MonsterAI : MonoBehaviour
 
     private bool InChaseRange()
     {
-        //distanceToTarget = Vector3.Distance(target.transform.position, transform.position);
         distanceToTarget = Vector3.Distance(target.transform.position, transform.position);
+        if (distanceToTarget < attackRange)
+        {
+            return true;
+        }
+
         //return distanceToTarget < chaseRange;
         if (Vector3.Distance(transform.position, target.transform.position) < viewDistance)
         {
             Vector3 dirToPlayer = (target.transform.position - transform.position).normalized;
-            float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
-
-            if (angleBetweenGuardAndPlayer < viewAngle)
-            {
-                return true;
-            }
+            if (TargetInView()) return true;
         }
         return false;
+    }
+
+    bool TargetInView() {
+        Vector3 dirToPlayer = (target.transform.position - transform.position).normalized;
+        float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
+
+        if (angleBetweenGuardAndPlayer < viewAngle)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private void EngageFlowers()
@@ -137,37 +151,37 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-    private bool InAttackRange()
-    {
-
-        distanceToTarget = Vector3.Distance(target.transform.position, transform.position);
-        return distanceToTarget < chaseRange;
-
-    }
-
     private void EngageDruid()
     {
 
-        if (distanceToTarget > agent.stoppingDistance)
+        //if (distanceToTarget > agent.stoppingDistance)
+        if (distanceToTarget > attackRange)
         {
-            ChaseDurin();
-
-
+            ChaseDruid();
         }
         else
         {
-            AttackDurin();
+            AttackDruid();
         }
 
     }
 
-    private void AttackDurin()
+    private void AttackDruid()
     {
-        timeSinceLastSawPlayer = 0;
-        //print("Caught");
+        transform.rotation = Quaternion.Slerp(transform.rotation, target.transform.rotation, 0.03f);
+        if (TargetInView())
+        {
+            if (Time.time >= fireRate)
+            {
+                fireRate = Time.time + fireDelay;
+                Instantiate(projectilePrefab, firePoint.transform.position, transform.rotation);
+            }
+        }
+
+        
     }
 
-    private void ChaseDurin()
+    private void ChaseDruid()
     {
         agent.SetDestination(target.transform.position);
 
@@ -193,7 +207,7 @@ public class MonsterAI : MonoBehaviour
     {
         Vector3 randomPos = enemyPos + GetRandomDir() * UnityEngine.Random.Range(10f, 70f);
         // prevent the Robo move outside the terrain     
-        randomPos = new Vector3(Mathf.Clamp(randomPos.x, minX, maxX), randomPos.y, Mathf.Clamp(randomPos.z, minZ, maxZ));
+       // randomPos = new Vector3(Mathf.Clamp(randomPos.x, minX, maxX), randomPos.y, Mathf.Clamp(randomPos.z, minZ, maxZ));
         return randomPos;
     }
 

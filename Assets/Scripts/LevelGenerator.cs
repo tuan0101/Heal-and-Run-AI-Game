@@ -48,16 +48,6 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    //private void GenerateGrass(GameObject[] grass, int amount)
-    //{
-    //    for (int i = 0; i < amount; i++)
-    //    {
-    //        Vector3 randomPoint = GetRandomPoint();
-    //        GameObject spwn = grass[UnityEngine.Random.Range(0, grass.Length - 1)];
-    //        Instantiate(spwn, randomPoint, Quaternion.identity);
-    //    }
-    //}
-
     Vector3 GetRandomPoint()
     {
         int xRandom = 0;
