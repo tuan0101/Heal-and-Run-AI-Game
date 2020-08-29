@@ -5807,8 +5807,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295760132}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 154.2, y: 0.1, z: 48.6}
-  m_LocalScale: {x: 5, y: 1, z: 5}
+  m_LocalPosition: {x: 108, y: -0.8, z: 92}
+  m_LocalScale: {x: 14, y: 1, z: 14}
   m_Children: []
   m_Father: {fileID: 457143567}
   m_RootOrder: 1
@@ -5994,11 +5994,11 @@ MonoBehaviour:
   - {fileID: 3505374353917377020, guid: fc8ef21bc1c0b53408cfa152f5719c8b, type: 3}
   - {fileID: 3863147308045981684, guid: 5b38e1a667cca6f49ae2ff18b379de73, type: 3}
   monster: {fileID: 744026002}
-  terrain: {fileID: 1276209394}
+  terrain: {fileID: 295760132}
   monsterAppears: 1
   NumOfTrees: 0
   NumOfGrass: 60
-  NumOfMonsters: 15
+  NumOfMonsters: 0
 --- !u!154 &457143565
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -11439,7 +11439,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 40
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1276209395
 Transform:
@@ -16993,26 +16993,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3588925606705974411, guid: 36deed746d7997e4d9a09c539423d044,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.37913373
-      objectReference: {fileID: 0}
-    - target: {fileID: 3588925606705974411, guid: 36deed746d7997e4d9a09c539423d044,
-        type: 3}
-      propertyPath: m_Center.x
-      value: 0.015146077
-      objectReference: {fileID: 0}
-    - target: {fileID: 3588925606705974411, guid: 36deed746d7997e4d9a09c539423d044,
-        type: 3}
-      propertyPath: m_Center.y
-      value: 0.48168746
-      objectReference: {fileID: 0}
-    - target: {fileID: 3588925606705974411, guid: 36deed746d7997e4d9a09c539423d044,
-        type: 3}
-      propertyPath: m_Center.z
-      value: 1.9302199e-10
-      objectReference: {fileID: 0}
     - target: {fileID: 5077529900066107441, guid: 36deed746d7997e4d9a09c539423d044,
         type: 3}
       propertyPath: m_LocalPosition.x
