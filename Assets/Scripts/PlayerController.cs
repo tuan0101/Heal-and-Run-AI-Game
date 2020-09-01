@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     Animator anim;
     GameObject obj;
     Vector3 Movement;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
         obj = GameObject.Find("PlayerBody");
         anim = obj.GetComponent<Animator>();
+        print("main scene: " + MainMenu.level);
     }
 
     // Update is called once per frame
