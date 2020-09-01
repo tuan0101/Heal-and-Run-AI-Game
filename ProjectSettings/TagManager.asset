@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Interactable
   - SingSphere
+  - dead
+  - projectile
   layers:
   - Default
   - TransparentFX

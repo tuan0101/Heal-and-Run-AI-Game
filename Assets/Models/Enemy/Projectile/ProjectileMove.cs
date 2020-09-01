@@ -44,7 +44,7 @@ public class ProjectileMove : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         speed = 0;
         ContactPoint contactPoint = collision.contacts[0];

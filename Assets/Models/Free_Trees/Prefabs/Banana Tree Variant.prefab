@@ -9657,6 +9657,12 @@ PrefabInstance:
     - {fileID: 6361913817436720027, guid: eed6820e91383b44ea653f6ad735cb2a, type: 3}
     - {fileID: 8990342868726320310, guid: eed6820e91383b44ea653f6ad735cb2a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: eed6820e91383b44ea653f6ad735cb2a, type: 3}
+--- !u!1 &574830767 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: eed6820e91383b44ea653f6ad735cb2a,
+    type: 3}
+  m_PrefabInstance: {fileID: 574799375}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3126974780900190824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9687,17 +9693,17 @@ PrefabInstance:
     - target: {fileID: 83327575367521082, guid: cbde87ccbabc81946b2b33b6e9219ad0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 148.06476
+      value: 173.13367
       objectReference: {fileID: 0}
     - target: {fileID: 83327575367521082, guid: cbde87ccbabc81946b2b33b6e9219ad0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.990711e-17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 83327575367521082, guid: cbde87ccbabc81946b2b33b6e9219ad0,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 107.64455
+      value: 164.46909
       objectReference: {fileID: 0}
     - target: {fileID: 83327575367521082, guid: cbde87ccbabc81946b2b33b6e9219ad0,
         type: 3}
@@ -9769,6 +9775,26 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4527615894253320311, guid: cbde87ccbabc81946b2b33b6e9219ad0,
+        type: 3}
+      propertyPath: deadMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: a7216958ade8e31439d81e1f4983c6f4, type: 2}
+    - target: {fileID: 4527615894253320311, guid: cbde87ccbabc81946b2b33b6e9219ad0,
+        type: 3}
+      propertyPath: childTree
+      value: 
+      objectReference: {fileID: 574830767}
+    - target: {fileID: 4527615894253320311, guid: cbde87ccbabc81946b2b33b6e9219ad0,
+        type: 3}
+      propertyPath: liveMat
+      value: 
+      objectReference: {fileID: 2100000, guid: a7216958ade8e31439d81e1f4983c6f4, type: 2}
+    - target: {fileID: 4527615894253320311, guid: cbde87ccbabc81946b2b33b6e9219ad0,
+        type: 3}
+      propertyPath: deadMat
+      value: 
+      objectReference: {fileID: 2100000, guid: ba80ad969addcf14f92a0ca35e3225aa, type: 2}
     - target: {fileID: 4940401054516825704, guid: cbde87ccbabc81946b2b33b6e9219ad0,
         type: 3}
       propertyPath: m_IsActive

@@ -11,17 +11,29 @@ public class PlantBehavior : InteractableBehavior
     private float holderTime;
     private ScoreKeeperBehavior scoreKeeper;
 
-    
-    
-    // Start is called before the first frame update
+    Renderer rend; 
+    Material myMat, currentMat;
+    public Material liveMat, deadMat;
+    public GameObject childTree;
+
+    int myHP = 75;
+
+
     void Start()
     {
         scoreKeeper = FindObjectOfType<ScoreKeeperBehavior>();
+
+        rend = childTree.GetComponent<Renderer>();
+        currentMat = rend.material;
+        //rend.enabled = true;
+        rend.sharedMaterial = liveMat;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (!complete)
         { 
             if(beingSungTo)
@@ -80,15 +92,20 @@ public class PlantBehavior : InteractableBehavior
         }
         CurrentPhase.SetActive(true);
     }
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
+        // activate if the if in range
         if(other.gameObject.CompareTag("SingSphere"))
         {
             Activate();
             other.gameObject.GetComponentInParent<PlayerController>().managerBehavior.target = this.gameObject;
+            Invoke("CurrenForm", 1);
         }
+
+
+
     }
-    private void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("SingSphere"))
         {
@@ -100,6 +117,33 @@ public class PlantBehavior : InteractableBehavior
             
         } 
         
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        //update HP when being attacked
+        if (collision.collider.tag == "projectile")
+        {
+            print(myHP);
+            myHP -= 25;
+            if (myHP <= 0)
+                DeadForm();
+            else
+                CurrenForm();
+        }
+    }
+
+    // Transform to a dead tree
+    void DeadForm()
+    {
+        this.tag = "dead";
+        rend.sharedMaterial = deadMat;
+    }
+
+    // Transform to a live tree
+    void CurrenForm()
+    {
+        rend.sharedMaterial = currentMat;
     }
 
 }

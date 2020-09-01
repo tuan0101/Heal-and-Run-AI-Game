@@ -5488,6 +5488,9 @@ MonoBehaviour:
   - {fileID: 4097265076571767398}
   CurrentPhase: {fileID: 1226725840939179253}
   TimeBetweenPhases: 1
+  liveMat: {fileID: 2100000, guid: a7216958ade8e31439d81e1f4983c6f4, type: 2}
+  deadMat: {fileID: 2100000, guid: ba80ad969addcf14f92a0ca35e3225aa, type: 2}
+  childTree: {fileID: 5864259285791318881}
 --- !u!65 &1504971561501929136
 BoxCollider:
   m_ObjectHideFlags: 0

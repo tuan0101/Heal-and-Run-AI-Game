@@ -9657,6 +9657,12 @@ PrefabInstance:
     - {fileID: 84157938080752441, guid: 826b6a0b570e8460990010fa615b5a2a, type: 3}
     - {fileID: 1665200938833136463, guid: 826b6a0b570e8460990010fa615b5a2a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 826b6a0b570e8460990010fa615b5a2a, type: 3}
+--- !u!1 &5350427106730946081 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 137650, guid: 826b6a0b570e8460990010fa615b5a2a,
+    type: 3}
+  m_PrefabInstance: {fileID: 5350427106731079571}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5350427106884726757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9687,17 +9693,17 @@ PrefabInstance:
     - target: {fileID: 83327575367521082, guid: cbde87ccbabc81946b2b33b6e9219ad0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 152.32028
+      value: 173.25517
       objectReference: {fileID: 0}
     - target: {fileID: 83327575367521082, guid: cbde87ccbabc81946b2b33b6e9219ad0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.9093704e-17
+      value: -0.0000009536743
       objectReference: {fileID: 0}
     - target: {fileID: 83327575367521082, guid: cbde87ccbabc81946b2b33b6e9219ad0,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 107.15404
+      value: 163.74246
       objectReference: {fileID: 0}
     - target: {fileID: 83327575367521082, guid: cbde87ccbabc81946b2b33b6e9219ad0,
         type: 3}
@@ -9774,6 +9780,26 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4527615894253320311, guid: cbde87ccbabc81946b2b33b6e9219ad0,
+        type: 3}
+      propertyPath: deadMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: a7216958ade8e31439d81e1f4983c6f4, type: 2}
+    - target: {fileID: 4527615894253320311, guid: cbde87ccbabc81946b2b33b6e9219ad0,
+        type: 3}
+      propertyPath: childTree
+      value: 
+      objectReference: {fileID: 5350427106730946081}
+    - target: {fileID: 4527615894253320311, guid: cbde87ccbabc81946b2b33b6e9219ad0,
+        type: 3}
+      propertyPath: liveMat
+      value: 
+      objectReference: {fileID: 2100000, guid: a7216958ade8e31439d81e1f4983c6f4, type: 2}
+    - target: {fileID: 4527615894253320311, guid: cbde87ccbabc81946b2b33b6e9219ad0,
+        type: 3}
+      propertyPath: deadMat
+      value: 
+      objectReference: {fileID: 2100000, guid: ba80ad969addcf14f92a0ca35e3225aa, type: 2}
     - target: {fileID: 4940401054516825704, guid: cbde87ccbabc81946b2b33b6e9219ad0,
         type: 3}
       propertyPath: m_IsActive
