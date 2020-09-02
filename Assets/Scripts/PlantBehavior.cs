@@ -124,12 +124,9 @@ public class PlantBehavior : InteractableBehavior
         //update HP when being attacked
         if (collision.collider.tag == "projectile")
         {
-            print(myHP);
             myHP -= 25;
             if (myHP <= 0)
                 DeadForm();
-            else
-                CurrenForm();
         }
     }
 

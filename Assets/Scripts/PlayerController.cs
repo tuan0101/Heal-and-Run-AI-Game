@@ -6,6 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody rb;
     public float speed = 50f;
+    int myHP = 100;
+    bool canMove = true;
+    bool isDead = false;
 
     bool singing = false;
     public GameObject ParticalManager;
@@ -51,17 +54,19 @@ public class PlayerController : MonoBehaviour
 
         if (Movement.x != 0 || Movement.z != 0)
         {
-            anim.SetBool("isRun", true);
+            // Runing
+            anim.SetInteger("PlayerInt", 2);
         }
         else
         {
-            anim.SetBool("isRun", false);
+            if (isDead == false)
+                anim.SetInteger("PlayerInt", 1);
         }
         sing();
     }
     private void FixedUpdate()
     {
-        if(!singing)
+        if(!singing && canMove)
         {
             
             rb.MovePosition(rb.position + Movement * speed * Time.deltaTime);
@@ -76,6 +81,7 @@ public class PlayerController : MonoBehaviour
             if(singing == false)
             {
                 audioSource.Play();
+                // Singing Animation
                 anim.SetBool("isSing", true);
                
             }
@@ -94,12 +100,49 @@ public class PlayerController : MonoBehaviour
             singing = false;
             singRange.SetActive(false);
             ParticalManager.SetActive(false);
+            // Do nothing
             anim.SetBool("isSing", false);
         }
        
     }
 
-    // Make this parent always look at the child rotation
+    // getting attack from the enemies
+    void OnCollisionEnter(Collision collision)
+    {
+        
+        if (collision.collider.tag == "projectile")
+        {
+            canMove = false;
+            myHP -= 25;
+            if (myHP <= 0)
+            {
+                print(myHP);
+                print("is ded");
+                // dead animation
+                anim.SetTrigger("isDead");
+                isDead = true;
+                this.gameObject.tag = "Untagged";
+            }
+            else
+            {
+                // Got-hit animation
+                anim.SetTrigger("GetHit");
+                Invoke("afterGothit", 0.2f);
+            }
+                
+            
+            
+            
+        }
+        
+    }
 
-    
+    // Wait for 0.2s after getting a hit
+    // use for Invoke function
+    void afterGothit() 
+    {  
+        canMove = true;
+    }
+
+
 }
