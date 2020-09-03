@@ -19,6 +19,7 @@ public class MonsterAI : MonoBehaviour
 
     public float viewDistance;
     public Light spotLight;
+    int difLV; // difficult level
 
     [HideInInspector]
     public NavMeshAgent agent;
@@ -33,6 +34,7 @@ public class MonsterAI : MonoBehaviour
     float distanceToFlower = Mathf.Infinity;
     float minX, maxX, minZ, maxZ;
     float viewAngle;
+    
 
     // enemy starting position
     Vector3 enemyPos;
@@ -47,7 +49,7 @@ public class MonsterAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         Druid = GameObject.FindWithTag("Player");
         //flower = GameObject.FindWithTag("Interactable");
-        viewAngle = spotLight.spotAngle;
+        viewAngle = spotLight.spotAngle - 10f;
         enemyPos = this.transform.position;
 
         roboAnim = GetComponentInChildren<Animator>();
@@ -60,6 +62,16 @@ public class MonsterAI : MonoBehaviour
         minZ = col.bounds.min.z;
         maxZ = col.bounds.max.z;
         roamPos = GetRoamingPos();
+
+        // get difficult level from MainMenu
+        difLV = MainMenu.level;
+        difLV = 5;
+        chaseRange += difLV * 2f;
+        attackRange += difLV /5f;
+        transfromRange += difLV / 5f;
+        fireDelay -= difLV / 25f;
+        viewAngle += difLV;
+        agent.speed += difLV / 2f;
     }
 
 
@@ -144,18 +156,22 @@ public class MonsterAI : MonoBehaviour
 
         if (TargetInView(obj))
         {
-
             if (Time.time >= fireRate)
             {
                 // fire
-                roboAnim.SetInteger("Robo", 0);
                 StartCoroutine(StopMoving());
+                roboAnim.SetInteger("Robo", 0);            
                 fireRate = Time.time + fireDelay;
-                Instantiate(projectilePrefab, firePoint.transform.position, transform.rotation);
+                Invoke("Fire", 0.5f);
             }
-            agent.enabled = true;
+            //agent.enabled = true;
         }
 
+    }
+
+    void Fire()
+    {
+        Instantiate(projectilePrefab, firePoint.transform.position, transform.rotation);
     }
 
     IEnumerator StopMoving(){

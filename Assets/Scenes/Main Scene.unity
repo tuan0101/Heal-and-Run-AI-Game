@@ -11331,7 +11331,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 847289008}
-  - component: {fileID: 847289009}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -11361,19 +11360,6 @@ RectTransform:
   m_AnchoredPosition: {x: 105, y: -46}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &847289009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 847289007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19db73a1e085c77408e148d368f118e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 724058168}
 --- !u!4 &886550826 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2091197291140992802, guid: eda781059272f8449b0dfc69eed936fd,
@@ -17540,6 +17526,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StoppingDistance
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5077529900066107453, guid: 36deed746d7997e4d9a09c539423d044,
+        type: 3}
+      propertyPath: m_Acceleration
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5077529900713964648, guid: 36deed746d7997e4d9a09c539423d044,
+        type: 3}
+      propertyPath: m_SpotAngle
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5077529900713964648, guid: 36deed746d7997e4d9a09c539423d044,
+        type: 3}
+      propertyPath: m_InnerSpotAngle
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1700054721, guid: 36deed746d7997e4d9a09c539423d044, type: 3}

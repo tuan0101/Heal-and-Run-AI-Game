@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class MainMenu : MonoBehaviour
 {
@@ -16,12 +17,15 @@ public class MainMenu : MonoBehaviour
     {
         //print(dropdownMenu.value);
         dropdownMenu = dropdownMenu.GetComponent<Dropdown>();
+        dropdownMenu.onValueChanged.AddListener(delegate
+        {
+            level = dropdownMenu.value + 1;
+        });
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void PlayHover()
@@ -29,30 +33,11 @@ public class MainMenu : MonoBehaviour
         hoverSound.GetComponent<AudioSource>().Play();
     }
 
-    public void HandleDropdown()
-    {
-        level = dropdownMenu.value;
-        print(dropdownMenu.value);
-        //switch (val)
-        //{
-        //    case 1:
-        //        print("this is 1");
-        //        break;
-        //}
-
-        //if(val == 0)
-        //{
-        //    print("this is 0");
-        //}
-    }
-
     public void LoadMainScene()
     {
         SceneManager.LoadScene("Main Scene");
     }
 
-    public int getLevel()
-    {
-        return level;
-    }
+
+
 }

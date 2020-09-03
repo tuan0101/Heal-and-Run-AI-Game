@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    int myHP = 100;
+    int myHP = 10000;
     bool canMove = true;
     bool isDead = false;
     public float speed = 50f;
@@ -33,7 +33,6 @@ public class PlayerController : MonoBehaviour
 
         obj = GameObject.Find("PlayerBody");
         anim = obj.GetComponent<Animator>();
-        
 
     }
 
@@ -56,7 +55,6 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-
                 anim.SetInteger("PlayerInt", 1);
             }
             sing();
