@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
+    public float health = 1;
     Transform bar;
     Image colorBar;
     Color currentColor;
+    public float t;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +20,7 @@ public class HealthBar : MonoBehaviour
     }
     private void Update()
     {
-        StartCoroutine(SetSize(0.2f));
+        StartCoroutine(SetSize(health));
         StartCoroutine(Flasher());
     }
 

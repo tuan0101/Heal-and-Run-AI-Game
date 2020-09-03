@@ -5471,6 +5471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  healthBar: {fileID: 724058168}
   ParticalManager: {fileID: 2087638142}
   songs:
   - {fileID: 8300000, guid: 7abd5fcfe5ceec446acf12f1b7a0f31f, type: 3}
@@ -11200,6 +11201,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 282ca255b710c2e42b3a5a38264b9233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 1
+  t: 0
 --- !u!1 &744026002 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5077529900066107450, guid: 36deed746d7997e4d9a09c539423d044,

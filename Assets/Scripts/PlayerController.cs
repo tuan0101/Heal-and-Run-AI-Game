@@ -4,23 +4,25 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    Rigidbody rb;
-    public float speed = 50f;
     int myHP = 100;
     bool canMove = true;
     bool isDead = false;
-
+    public float speed = 50f;
     bool singing = false;
-    public GameObject ParticalManager;
-    public AudioClip[] songs;
-    AudioSource audioSource;
-    public GameObject singRange;
-    [HideInInspector]
-    public ParticalManagerBehavior managerBehavior;
 
+    Rigidbody rb;
     Animator anim;
     GameObject obj;
     Vector3 Movement;
+    AudioSource audioSource;
+
+    public HealthBar healthBar;
+    public GameObject ParticalManager;
+    public AudioClip[] songs;  
+    public GameObject singRange;
+    
+    [HideInInspector]
+    public ParticalManagerBehavior managerBehavior;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +33,8 @@ public class PlayerController : MonoBehaviour
 
         obj = GameObject.Find("PlayerBody");
         anim = obj.GetComponent<Animator>();
+        
+
     }
 
     // Update is called once per frame
@@ -101,21 +105,25 @@ public class PlayerController : MonoBehaviour
         {
             canMove = false;
             myHP -= 25;
+            // update HP bar
+            healthBar.health = myHP / 100f; //scale to 1
+
             if (myHP <= 0)
             {
                 print(myHP);
-                print("is ded");
                 // dead animation
                 anim.SetTrigger("Dead");
                 isDead = true;
                 // Deactive animation from the enemies
                 this.gameObject.tag = "Untagged";
+
             }
             else
             {
                 // Got-hit animation
                 anim.SetTrigger("GetHit");
                 Invoke("afterGothit", 0.2f);
+                
             }
         }
     }

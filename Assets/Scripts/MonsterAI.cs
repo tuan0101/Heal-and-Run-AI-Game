@@ -138,7 +138,6 @@ public class MonsterAI : MonoBehaviour
 
     void Attack(GameObject obj)
     {
-        print("attack");
         // rotate to face the target
         Quaternion targetRotation = Quaternion.LookRotation(obj.transform.position - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 0.03f);
