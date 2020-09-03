@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowerBehavior : MonoBehaviour
+public class WispBehaviour : MonoBehaviour
 {
     GameObject player;
     public float orbitRange =.5f;

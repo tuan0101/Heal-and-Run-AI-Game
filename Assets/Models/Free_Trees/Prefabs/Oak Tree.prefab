@@ -19210,6 +19210,7 @@ GameObject:
   - component: {fileID: 1436423335068508291}
   - component: {fileID: 72835516304829922}
   - component: {fileID: 5692451509254247448}
+  - component: {fileID: 7177577146945429608}
   m_Layer: 0
   m_Name: Oak Tree
   m_TagString: Interactable
@@ -19323,6 +19324,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.74, y: 5.5757275, z: 1.93}
   m_Center: {x: 0, y: 3, z: 0}
+--- !u!54 &7177577146945429608
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283174328597390228}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 14
+  m_CollisionDetection: 0
 --- !u!1 &4420449108731078862
 GameObject:
   m_ObjectHideFlags: 0

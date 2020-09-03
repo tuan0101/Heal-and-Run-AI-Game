@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class BuffManager : MonoBehaviour
 {
+    public GameObject[] SpawnableObjects;
+
     PlayerController playerController;
     PlantBehavior[] plants;
-    public GameObject[] SpawnableObjects;
-    private MonsterAI[] monsters;
+    MonsterAI[] monsters;
     // Start is called before the first frame update
     void Start()
     {

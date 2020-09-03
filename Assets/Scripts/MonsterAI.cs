@@ -12,12 +12,12 @@ public class MonsterAI : MonoBehaviour
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] GameObject firePoint;
 
-    GameObject target;
-    GameObject flower;
+    GameObject Druid;
+    [SerializeField] GameObject flower;
 
     MeshCollider col;
 
-    public float viewDistance; 
+    public float viewDistance;
     public Light spotLight;
 
     [HideInInspector]
@@ -45,23 +45,20 @@ public class MonsterAI : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        target = GameObject.FindWithTag("Player");
-        flower = GameObject.FindWithTag("Interactable");
+        Druid = GameObject.FindWithTag("Player");
+        //flower = GameObject.FindWithTag("Interactable");
         viewAngle = spotLight.spotAngle;
         enemyPos = this.transform.position;
-        
 
         roboAnim = GetComponentInChildren<Animator>();
 
         col = terrain.GetComponent<MeshCollider>();
 
-        // cannot call col.bounds in update()
+        // Note: cannot call col.bounds in update()
         minX = col.bounds.min.x;
         maxX = col.bounds.max.x;
         minZ = col.bounds.min.z;
         maxZ = col.bounds.max.z;
-        print(minX);
-        print(roamPos);
         roamPos = GetRoamingPos();
     }
 
@@ -69,27 +66,30 @@ public class MonsterAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+        distanceToTarget = Vector3.Distance(transform.position, Druid.transform.position);
 
-        if (InChaseRange())
+        if (InChaseRange() && Druid.tag == "Player")
         {
             EngageDruid();
+
         }
-        //else if (InFlowerRange())
-        //{
-        //    EngageFlowers();
-        //}
+        else if (InFlowerRange())
+        {
+            EngageFlowers();
+        }
 
         else
         {
             Roaming();
 
         }
+
+
     }
 
     private bool InChaseRange()
     {
-        distanceToTarget = Vector3.Distance(target.transform.position, transform.position);
+        distanceToTarget = Vector3.Distance(Druid.transform.position, transform.position);
         // attack if in range
         if (distanceToTarget < attackRange)
         {
@@ -97,16 +97,16 @@ public class MonsterAI : MonoBehaviour
         }
 
         // else chase if in view
-        if (Vector3.Distance(transform.position, target.transform.position) < viewDistance)
+        if (Vector3.Distance(transform.position, Druid.transform.position) < viewDistance)
         {
-            Vector3 dirToPlayer = (target.transform.position - transform.position).normalized;
-            return TargetInView();
+            Vector3 dirToPlayer = (Druid.transform.position - transform.position).normalized;
+            return TargetInView(Druid);
         }
         return false;
     }
 
-    bool TargetInView() {
-        Vector3 dirToPlayer = (target.transform.position - transform.position).normalized;
+    bool TargetInView(GameObject obj) {
+        Vector3 dirToPlayer = (obj.transform.position - transform.position).normalized;
         float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
 
         if (angleBetweenGuardAndPlayer < viewAngle)
@@ -117,8 +117,6 @@ public class MonsterAI : MonoBehaviour
 
     private void EngageDruid()
     {
-        
-        //if (distanceToTarget > agent.stoppingDistance)
         if (distanceToTarget > attackRange)
         {
             ChaseDruid();
@@ -132,28 +130,47 @@ public class MonsterAI : MonoBehaviour
 
     private void AttackDruid()
     {
-        roboAnim.SetInteger("Robo", 1);
-        //print("attk");
-        Quaternion targetRotation = Quaternion.LookRotation(target.transform.position - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 0.03f);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, target.transform.rotation, 0.03f);
-        if (TargetInView())
-        {
-            if (Time.time >= fireRate)
-            {
-                fireRate = Time.time + fireDelay;
-                Instantiate(projectilePrefab, firePoint.transform.position, transform.rotation);
-            }
-        }
 
+        roboAnim.SetInteger("Robo", 1);
+        Attack(Druid);
 
     }
 
+    void Attack(GameObject obj)
+    {
+        print("attack");
+        // rotate to face the target
+        Quaternion targetRotation = Quaternion.LookRotation(obj.transform.position - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 0.03f);
+
+        if (TargetInView(obj))
+        {
+
+            if (Time.time >= fireRate)
+            {
+                // fire
+                roboAnim.SetInteger("Robo", 0);
+                StartCoroutine(StopMoving());
+                fireRate = Time.time + fireDelay;
+                Instantiate(projectilePrefab, firePoint.transform.position, transform.rotation);
+            }
+            agent.enabled = true;
+        }
+
+    }
+
+    IEnumerator StopMoving(){
+        agent.enabled = false;
+        yield return new WaitForSeconds(0.5f);
+        agent.enabled = true;
+    }
+
+
     private void ChaseDruid()
     {
-        agent.SetDestination(target.transform.position);
+        agent.SetDestination(Druid.transform.position);
 
-        distanceToTarget = Vector3.Distance(target.transform.position, transform.position);
+        distanceToTarget = Vector3.Distance(Druid.transform.position, transform.position);
         if (distanceToTarget < transfromRange)
         {
             roboAnim.SetInteger("Robo", 1);
@@ -174,7 +191,7 @@ public class MonsterAI : MonoBehaviour
         }
         else
         {
-            //print("attack flower");
+            Attack(flower);
         }
 
     }
@@ -185,11 +202,10 @@ public class MonsterAI : MonoBehaviour
         return distanceToFlower < chaseRange;
     }
 
-    private void OnTriggerEnter(Collider other)
+    // if found a flower, set it a target
+    void OnTriggerEnter(Collider other)
     {
-        //print("found : " + other.tag);
-
-        // if found a flower
+        
         if (other.tag == "Interactable")
         {
             flower = other.gameObject;
@@ -207,13 +223,10 @@ public class MonsterAI : MonoBehaviour
 
     private Vector3 GetRoamingPos()
     {
-        print("direction: " + GetRandomDir());
         Vector3 randomPos = enemyPos + GetRandomDir() * UnityEngine.Random.Range(10f, 70f);
-        print(randomPos);
         // prevent the Robo move outside the terrain     
         randomPos = new Vector3(Mathf.Clamp(randomPos.x, minX, maxX), randomPos.y, Mathf.Clamp(randomPos.z, minZ, maxZ));
-        print(minX);
-        print(randomPos);
+
         return randomPos;
     }
 
@@ -224,7 +237,7 @@ public class MonsterAI : MonoBehaviour
 
     private void Roaming()
     {
-        //print("roaming");
+        // running animation
         roboAnim.SetInteger("Robo", 2);
         // Set the agent to go to the roam position.
         agent.SetDestination(roamPos);

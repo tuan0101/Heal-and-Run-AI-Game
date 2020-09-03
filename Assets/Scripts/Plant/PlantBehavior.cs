@@ -119,6 +119,7 @@ public class PlantBehavior : InteractableBehavior
         
     }
 
+    // being attacked
     void OnCollisionEnter(Collision collision)
     {
         //update HP when being attacked

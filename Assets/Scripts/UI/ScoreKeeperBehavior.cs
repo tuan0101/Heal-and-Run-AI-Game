@@ -12,7 +12,6 @@ public class ScoreKeeperBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         PlantRemainingText.text = PlantsRemaining.ToString();
         buffManager = FindObjectOfType<BuffManager>();
     }
