@@ -25,7 +25,7 @@ public class MonsterAI : MonoBehaviour
     public NavMeshAgent agent;
 
     // For chasing
-    [SerializeField] float chaseRange = 50f;
+    [SerializeField] float chaseRange = 20f;
     float attackRange = 8f;
     float fireRate = 1f;
     float fireDelay = 1f;
@@ -46,6 +46,7 @@ public class MonsterAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        print(MainMenu.level);
         agent = GetComponent<NavMeshAgent>();
         Druid = GameObject.FindWithTag("Player");
         //flower = GameObject.FindWithTag("Interactable");
@@ -78,9 +79,8 @@ public class MonsterAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distanceToTarget = Vector3.Distance(transform.position, Druid.transform.position);
 
-        if (InChaseRange() && Druid.tag == "Player")
+        if (InChaseRange())
         {
             EngageDruid();
 
@@ -93,27 +93,41 @@ public class MonsterAI : MonoBehaviour
         else
         {
             Roaming();
-
+            //Invoke("printR", 3f);
         }
 
 
     }
 
+    void printR()
+    {
+        print("roaming");
+    }
+
+    float DistanceToTarget(GameObject obj)
+    {
+        return Vector3.Distance(transform.position, obj.transform.position);
+    }
+
     private bool InChaseRange()
     {
-        distanceToTarget = Vector3.Distance(Druid.transform.position, transform.position);
-        // attack if in range
-        if (distanceToTarget < attackRange)
+        if (Druid)
         {
-            return true;
+            distanceToTarget = DistanceToTarget(Druid);
+            // attack if in range
+            if (distanceToTarget < attackRange)
+            {
+                return true;
+            }
+
+            // else chase if in view
+            if (Vector3.Distance(transform.position, Druid.transform.position) < viewDistance)
+            {
+                Vector3 dirToPlayer = (Druid.transform.position - transform.position).normalized;
+                return TargetInView(Druid);
+            }
         }
 
-        // else chase if in view
-        if (Vector3.Distance(transform.position, Druid.transform.position) < viewDistance)
-        {
-            Vector3 dirToPlayer = (Druid.transform.position - transform.position).normalized;
-            return TargetInView(Druid);
-        }
         return false;
     }
 
@@ -142,9 +156,16 @@ public class MonsterAI : MonoBehaviour
 
     private void AttackDruid()
     {
+        if(Druid.tag == "Player")
+        {
+            roboAnim.SetInteger("Robo", 1);
+            Attack(Druid);
+        }
+        else
+        {
+            Druid = null;
+        }
 
-        roboAnim.SetInteger("Robo", 1);
-        Attack(Druid);
 
     }
 
@@ -164,7 +185,7 @@ public class MonsterAI : MonoBehaviour
                 fireRate = Time.time + fireDelay;
                 Invoke("Fire", 0.5f);
             }
-            //agent.enabled = true;
+            agent.enabled = true;
         }
 
     }
@@ -172,12 +193,16 @@ public class MonsterAI : MonoBehaviour
     void Fire()
     {
         Instantiate(projectilePrefab, firePoint.transform.position, transform.rotation);
+        //agent.enabled = true;
     }
 
     IEnumerator StopMoving(){
         agent.enabled = false;
         yield return new WaitForSeconds(0.5f);
         agent.enabled = true;
+        //agent.isStopped = true;
+        //yield return new WaitForSeconds(0.5f);
+        //agent.isStopped = false;
     }
 
 
@@ -198,22 +223,38 @@ public class MonsterAI : MonoBehaviour
     }
     private void EngageFlowers()
     {
-        distanceToFlower = Vector3.Distance(transform.position, flower.transform.position);
-        if (distanceToFlower > agent.stoppingDistance)
+        if (flower)
         {
-            agent.SetDestination(flower.transform.position);
+            distanceToFlower = DistanceToTarget(flower);
+            if (distanceToFlower > agent.stoppingDistance)
+            {
+                agent.SetDestination(flower.transform.position);
 
+            }
+            else
+            {
+                if (flower.tag == "Interactable")
+                    Attack(flower);
+                else
+                    // disconect with the flower to target another 
+                    flower = null;
+
+            }
         }
-        else
-        {
-            Attack(flower);
-        }
+
 
     }
 
     private bool InFlowerRange()
     {
-        distanceToFlower = Vector3.Distance(flower.transform.position, transform.position);
+        if (flower)
+        {
+            distanceToFlower = Vector3.Distance(flower.transform.position, transform.position);
+        } else
+        {
+            return false;
+        }
+        
         return distanceToFlower < chaseRange;
     }
 
@@ -224,7 +265,7 @@ public class MonsterAI : MonoBehaviour
         if (other.tag == "Interactable")
         {
             flower = other.gameObject;
-        }
+        }       
     }
 
 

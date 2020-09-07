@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    int myHP = 10000;
+    int myHP = 50;
     bool canMove = true;
     bool isDead = false;
     public float speed = 50f;
@@ -33,13 +34,16 @@ public class PlayerController : MonoBehaviour
 
         obj = GameObject.Find("PlayerBody");
         anim = obj.GetComponent<Animator>();
-
+       
+        //spawn at a random position each time
+        transform.position *= UnityEngine.Random.Range(0.5f, 1.5f);
     }
 
     // Update is called once per frame
     void Update()
     {
         if (!isDead)
+        //if (canMove)
         {
             Movement.x = Input.GetAxisRaw("Horizontal");
             Movement.z = Input.GetAxisRaw("Vertical");
@@ -63,7 +67,7 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!singing && canMove)
+        if (!singing && canMove && !isDead)
         {
 
             rb.MovePosition(rb.position + Movement * speed * Time.deltaTime);
@@ -108,13 +112,16 @@ public class PlayerController : MonoBehaviour
 
             if (myHP <= 0)
             {
-                print(myHP);
+                myHP = 0;
+                healthBar.health = myHP / 100f;
+
                 // dead animation
                 anim.SetTrigger("Dead");
                 isDead = true;
+                canMove = false;
                 // Deactive animation from the enemies
                 this.gameObject.tag = "Untagged";
-
+                //Invoke("GameOver", 2f);
             }
             else
             {
@@ -124,6 +131,11 @@ public class PlayerController : MonoBehaviour
                 
             }
         }
+    }
+
+    void GameOver()
+    {
+        SceneManager.LoadScene("DefeatScene");
     }
 
     // Wait for 0.2s after getting a hit

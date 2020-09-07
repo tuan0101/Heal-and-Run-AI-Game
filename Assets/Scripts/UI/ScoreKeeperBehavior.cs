@@ -7,13 +7,24 @@ using UnityEngine.SceneManagement;
 public class ScoreKeeperBehavior : MonoBehaviour
 {
     public BuffManager buffManager;
-    public int PlantsRemaining;
-    public Text PlantRemainingText;
+    int obtainTrees=0;
+    public Text obtainText;
+    int remainTrees;
+    public Text remainText;
+
+    public Text currentLevel;
+    LevelGenerator generator;
     // Start is called before the first frame update
     void Start()
     {
-        PlantRemainingText.text = PlantsRemaining.ToString();
         buffManager = FindObjectOfType<BuffManager>();
+        generator = FindObjectOfType<LevelGenerator>();
+        currentLevel.text = "Level: " + MainMenu.level;
+
+        DisplayObtainText(obtainTrees.ToString());
+
+        remainTrees = generator.numOfTrees;
+
     }
 
     // Update is called once per frame
@@ -25,19 +36,27 @@ public class ScoreKeeperBehavior : MonoBehaviour
     public void plantHealed()
     {
         buffManager.activateRandomBuff();
-        PlantsRemaining--;
-        if(PlantsRemaining <= 0)
+        obtainTrees++;
+        DisplayObtainText(obtainTrees.ToString());
+        if (obtainTrees >= 10)
         {
-            win();
+            LoadScene("WinScene");
         }
-        PlantRemainingText.text = "Plants Remaining :" + PlantsRemaining.ToString();
     }
-    public void win()
+
+    public void plantDead()
     {
-        SceneManager.LoadScene(2);
+        remainTrees--;
+        remainText.text = "Remain: " + remainTrees;
     }
-    public void die()
+    public void LoadScene(string name)
     {
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(name);
     }
+
+    void DisplayObtainText(string numString)
+    {
+        obtainText.text = "Obtain: " + numString + "/10";
+    }
+
 }

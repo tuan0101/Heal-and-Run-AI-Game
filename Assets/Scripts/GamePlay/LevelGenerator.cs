@@ -13,16 +13,22 @@ public class LevelGenerator : MonoBehaviour
     public GameObject terrain;
     [SerializeField] float monsterAppears;
 
-    public int NumOfTrees;
-    public int NumOfGrass;
-    public int NumOfMonsters;
+    public int numOfTrees;
+    public int numOfGrass;
+    public int numOfMonsters;
     // Start is called before the first frame update
     void Start()
     {
         col = terrain.GetComponent<MeshCollider>();
-        GeneratePlants(treeTypes, NumOfTrees);
-        GeneratePlants(grassTypes, NumOfGrass);
-        StartCoroutine(MonsterWillAppear(NumOfMonsters));
+        GeneratePlants(treeTypes, numOfTrees);
+        GeneratePlants(grassTypes, numOfGrass);
+        StartCoroutine(MonsterWillAppear(numOfMonsters));
+
+        // set up difficult level
+        int lv = MainMenu.level;
+        numOfTrees -= lv / 2;
+        monsterAppears -= lv / 8f;
+        numOfMonsters += lv / 2;
     }
 
 
@@ -58,4 +64,5 @@ public class LevelGenerator : MonoBehaviour
 
         return new Vector3(xRandom, 0, yRandom);
     }
+
 }

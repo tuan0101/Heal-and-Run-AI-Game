@@ -57,7 +57,7 @@ public class BuffManager : MonoBehaviour
             monster.agent.speed = monster.agent.speed * .9f;
         }
        
-        Debug.Log("Enemy Slow buff empty");
+        Debug.Log("Enemy Slow buff");
     }
     //halfs time to sing to all plants
     public void ActivateSingSpeedBuff()

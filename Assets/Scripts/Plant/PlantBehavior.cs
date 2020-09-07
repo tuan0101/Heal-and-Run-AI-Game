@@ -8,26 +8,30 @@ public class PlantBehavior : InteractableBehavior
     //the current punch partical
     public GameObject CurrentPhase;
     public float TimeBetweenPhases;
-    private float holderTime;
-    private ScoreKeeperBehavior scoreKeeper;
 
-    Renderer rend; 
-    Material myMat, currentMat;
+    // change tree form
     public Material liveMat, deadMat;
     public GameObject childTree;
+    Renderer rend;
+    Material myMat, currentMat;
+
+    float holderTime;
+    ScoreKeeperBehavior scoreKeeper;
+
+    
 
     int myHP = 75;
-
-
     void Start()
     {
         scoreKeeper = FindObjectOfType<ScoreKeeperBehavior>();
-
         rend = childTree.GetComponent<Renderer>();
+        
+
         currentMat = rend.material;
         //rend.enabled = true;
         rend.sharedMaterial = liveMat;
 
+        
     }
 
     // Update is called once per frame
@@ -65,7 +69,7 @@ public class PlantBehavior : InteractableBehavior
         if (timeElapsed >= 2 * TimeBetweenPhases)
         {
             complete = true;
-            scoreKeeper.plantHealed();
+            
             CurrentPhase = ParticalPhases[3];            
         }
         else if (timeElapsed >= 1 * TimeBetweenPhases)
@@ -94,12 +98,12 @@ public class PlantBehavior : InteractableBehavior
     }
     void OnTriggerEnter(Collider other)
     {
-        // activate if the if in range
+        // change to live form
         if(other.gameObject.CompareTag("SingSphere"))
         {
             Activate();
             other.gameObject.GetComponentInParent<PlayerController>().managerBehavior.target = this.gameObject;
-            Invoke("CurrenForm", 1);
+            Invoke("HealedForm", 1);
         }
 
 
@@ -127,7 +131,9 @@ public class PlantBehavior : InteractableBehavior
         {
             myHP -= 25;
             if (myHP <= 0)
+            {
                 DeadForm();
+            }
         }
     }
 
@@ -136,12 +142,14 @@ public class PlantBehavior : InteractableBehavior
     {
         this.tag = "dead";
         rend.sharedMaterial = deadMat;
+        scoreKeeper.plantDead();
     }
 
     // Transform to a live tree
-    void CurrenForm()
+    void HealedForm()
     {
         rend.sharedMaterial = currentMat;
+        scoreKeeper.plantHealed();
     }
 
 }
