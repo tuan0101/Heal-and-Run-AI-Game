@@ -46,7 +46,6 @@ public class MonsterAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        print(MainMenu.level);
         agent = GetComponent<NavMeshAgent>();
         Druid = GameObject.FindWithTag("Player");
         //flower = GameObject.FindWithTag("Interactable");

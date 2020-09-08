@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
     private void sing()
     {
         if (Input.GetAxisRaw("Interact") != 0)
+        //if (Input.GetKeyDown(KeyCode.F))
         {
             if (singing == false)
             {

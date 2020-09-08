@@ -15,9 +15,6 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        print(dropdownMenu.value);
-        print(level);
         dropdownMenu.value = level - 1;
         
         dropdownMenu = dropdownMenu.GetComponent<Dropdown>();

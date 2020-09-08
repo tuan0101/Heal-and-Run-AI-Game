@@ -31,7 +31,7 @@ public class ParticalManagerBehavior : MonoBehaviour
                 }
                 ps.SetParticles(m_Particles, numParticlesAlive);  
 
-                if(Vector3.Distance(this.transform.position,target.transform.position) > 15)
+                if(Vector3.Distance(this.transform.position,target.transform.position) > 9)
                 {
                   target = null;
                 }

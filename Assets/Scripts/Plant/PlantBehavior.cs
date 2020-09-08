@@ -99,16 +99,30 @@ public class PlantBehavior : InteractableBehavior
     void OnTriggerEnter(Collider other)
     {
         // change to live form
-        if(other.gameObject.CompareTag("SingSphere"))
+        if (other.gameObject.tag == "SingSphere")
         {
             Activate();
             other.gameObject.GetComponentInParent<PlayerController>().managerBehavior.target = this.gameObject;
             Invoke("HealedForm", 1);
         }
 
-
-
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+
+        //update HP when being attacked
+        if (collision.collider.tag == "projectile")
+        {
+            myHP -= 25;
+            if (myHP <= 0)
+            {
+                DeadForm();
+            }
+        }
+    }
+
+
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("SingSphere"))
@@ -123,19 +137,9 @@ public class PlantBehavior : InteractableBehavior
         
     }
 
-    // being attacked
-    void OnCollisionEnter(Collision collision)
-    {
-        //update HP when being attacked
-        if (collision.collider.tag == "projectile")
-        {
-            myHP -= 25;
-            if (myHP <= 0)
-            {
-                DeadForm();
-            }
-        }
-    }
+
+
+   
 
     // Transform to a dead tree
     void DeadForm()

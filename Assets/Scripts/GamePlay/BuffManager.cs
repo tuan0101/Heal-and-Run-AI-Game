@@ -9,12 +9,14 @@ public class BuffManager : MonoBehaviour
     PlayerController playerController;
     PlantBehavior[] plants;
     MonsterAI[] monsters;
+    ScoreKeeperBehavior scoreKeeper;
     // Start is called before the first frame update
     void Start()
     {
         plants = FindObjectsOfType<PlantBehavior>();
         playerController = FindObjectOfType<PlayerController>();
         monsters = FindObjectsOfType<MonsterAI>();
+        scoreKeeper = FindObjectOfType<ScoreKeeperBehavior>();
     }
 
     // Update is called once per frame
@@ -47,7 +49,7 @@ public class BuffManager : MonoBehaviour
     public void ActivateBuffSpeed()
     {
         playerController.speed = playerController.speed * 1.3f;
-        Debug.Log("Speed Buff");
+        StartCoroutine(scoreKeeper.BuffMessage("Player Speed Buff: + 30%"));
     }
     //slow enemy speed 
     public void ActivateEnemySlow()
@@ -56,8 +58,7 @@ public class BuffManager : MonoBehaviour
         {
             monster.agent.speed = monster.agent.speed * .9f;
         }
-       
-        Debug.Log("Enemy Slow buff");
+        StartCoroutine(scoreKeeper.BuffMessage("Enemy Slow Buff: -10%"));
     }
     //halfs time to sing to all plants
     public void ActivateSingSpeedBuff()
@@ -66,11 +67,11 @@ public class BuffManager : MonoBehaviour
         {
             plant.TimeBetweenPhases = plant.TimeBetweenPhases / 2;
         }
-        Debug.Log("SingSpeedBuff");
+        StartCoroutine(scoreKeeper.BuffMessage("Sing Speed Buff: x2"));
     }
     public void SpawnWisp()
     {
         Instantiate(SpawnableObjects[0], transform);
-        Debug.Log("wist spawn");
+        StartCoroutine(scoreKeeper.BuffMessage("Wist spawn"));
     }
 }
