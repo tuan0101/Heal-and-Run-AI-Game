@@ -115,7 +115,7 @@ public class PlantBehavior : InteractableBehavior
         if (collision.collider.tag == "projectile")
         {
             myHP -= 25;
-            if (myHP <= 0)
+            if (myHP == 0)
             {
                 DeadForm();
             }

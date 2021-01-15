@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    int myHP = 50;
+    int myHP = 100;
     bool canMove = true;
     bool isDead = false;
     public float speed = 50f;
@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
                 canMove = false;
                 // Deactive animation from the enemies
                 this.gameObject.tag = "Untagged";
-                //Invoke("GameOver", 2f);
+                Invoke("GameOver", 2f);
             }
             else
             {

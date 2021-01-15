@@ -26,7 +26,6 @@ public class LevelGenerator : MonoBehaviour
 
         // set up difficult level
         int lv = MainMenu.level;
-        numOfTrees -= lv / 2;
         monsterAppears -= lv / 8f;
         numOfMonsters += lv / 2;
     }

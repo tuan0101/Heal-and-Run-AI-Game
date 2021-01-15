@@ -62,6 +62,13 @@ public class ScoreKeeperBehavior : MonoBehaviour
     {
         remainTrees--;
         remainText.text = "Remain: " + remainTrees;
+        // Game over
+        if (remainTrees < (20 - obtainTrees))
+        {
+            remainText.color = Color.red;
+            if (remainTrees < (10 - obtainTrees))
+                LoadScene("DefeatScene");
+        }
     }
     public void LoadScene(string name)
     {
@@ -92,11 +99,6 @@ public class ScoreKeeperBehavior : MonoBehaviour
     {
         int i = 0;
         
-        //for (int j = 0; j<text.Length; j++)
-        //{
-        //    if (text[j] == null)
-        //        i = j;
-        //}
         if(text[0] == null)
         {
             i = 0;
@@ -117,9 +119,6 @@ public class ScoreKeeperBehavior : MonoBehaviour
             
         }
 
-
-            
-
         text[i] = Instantiate(buffPrefab, buffPrefab.transform.position, Quaternion.identity) as Text;
         text[i].transform.SetParent(GameObject.Find("Canvas").transform, false);
         text[i].transform.position = currentPos;
@@ -129,16 +128,6 @@ public class ScoreKeeperBehavior : MonoBehaviour
         
         yield return new WaitForSeconds(2);
         StartCoroutine(FadeTextToZeroAlpha(1.5f, text[i]));
-
-        //Text tempText = Instantiate(buffPrefab, buffPrefab.transform.position, Quaternion.identity) as Text;
-        //tempText.transform.SetParent(GameObject.Find("Canvas").transform, false);
-        //tempText.transform.position = currentPos;
-
-        //StartCoroutine(TypeText(tempText, message));
-        //StartCoroutine(FadeTextToFullAlpha(3f, tempText));
-        //StartCoroutine(MoveUp(tempText));
-        //yield return new WaitForSeconds(5);
-        //StartCoroutine(FadeTextToZeroAlpha(3f, tempText));
     }
 
     IEnumerator FadeTextToFullAlpha(float t, Text i)
