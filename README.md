@@ -18,3 +18,7 @@ https://assetstore.unity.com/packages/3d/environments/landscapes/low-poly-simple
 Simple Low Poly Nature Pack
 
 https://assetstore.unity.com/packages/3d/environments/landscapes/simple-low-poly-nature-pack-157552
+
+Yughues Free Stylized Foliages
+
+https://assetstore.unity.com/packages/3d/vegetation/yughues-free-stylized-foliages-13392
