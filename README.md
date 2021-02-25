@@ -15,3 +15,6 @@ Low-Poly Simple Nature Pack
 https://assetstore.unity.com/packages/3d/environments/landscapes/low-poly-simple-nature-pack-162153
 
 
+Simple Low Poly Nature Pack
+
+https://assetstore.unity.com/packages/3d/environments/landscapes/simple-low-poly-nature-pack-157552
