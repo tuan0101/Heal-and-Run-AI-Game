@@ -4,7 +4,14 @@ In this game, I created a patrol system that AI bots is getting smarter through 
 The scripts can be found at Assets/Script folder.
 https://tuan0101.itch.io/run-and-heal
 
-Credits:
+##Credits:
 
-Textures:
+####Textures:
 https://assetstore.unity.com/packages/2d/textures-materials/floors/five-seamless-tileable-ground-textures-57060
+
+####Trees:
+Low-Poly Simple Nature Pack
+
+https://assetstore.unity.com/packages/3d/environments/landscapes/low-poly-simple-nature-pack-162153
+
+
