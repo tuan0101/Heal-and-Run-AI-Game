@@ -9,15 +9,15 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/MenuScene.unity
+    path: Assets/_Scenes/MenuScene.unity
     guid: 2c98a4270b6cabb46b539bd894a6c7fa
   - enabled: 1
-    path: Assets/Scenes/MainScene.unity
+    path: Assets/_Scenes/MainScene.unity
     guid: 1f89be0d9391761489bafefa0862e782
   - enabled: 1
-    path: Assets/Scenes/WinScene.unity
+    path: Assets/_Scenes/WinScene.unity
     guid: 7a3f386acc17bc04398a53fac29e3661
   - enabled: 1
-    path: Assets/Scenes/DefeatScene.unity
+    path: Assets/_Scenes/DefeatScene.unity
     guid: b66382f1cc341aa4bb04b2958e6a849a
   m_configObjects: {}
