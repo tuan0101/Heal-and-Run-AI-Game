@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAudio : MonoBehaviour
@@ -8,15 +6,29 @@ public class PlayerAudio : MonoBehaviour
     public AudioClip[] songs;
     public GameObject singRange;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlayASong()
     {
-        
+        audioSource.clip = songs[Random.Range(0, songs.Length)];
+        audioSource.Play();
+    }
+
+    public void StopPlaySong()
+    {
+            audioSource.Stop();
+    }
+
+    public void DisableSingRange()
+    {
+        singRange.SetActive(false);
+    }
+
+    public void EnableSingRange()
+    {
+        singRange.SetActive(true);
     }
 }
