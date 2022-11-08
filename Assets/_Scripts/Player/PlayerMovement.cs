@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    bool isDead = false;
+    public bool isDead = false;
     bool canMove = true;   // disable all input while getting hit from enemy
     public float speed = 50f;
 
@@ -11,19 +11,23 @@ public class PlayerMovement : MonoBehaviour
     public GameObject singRange;
 
     Rigidbody rb;
-    Animator anim;
+    public Animator anim;
     GameObject obj;
-    Vector3 Movement;
+    public Vector3 movement;
+
     public GameObject ParticalManager;
+    [HideInInspector]
+    public ParticalManagerBehavior managerBehavior;
 
     public event Action OnStartSing = delegate { };
     public event Action OnStopSing = delegate { };
-    // Start is called before the first frame update
-    void Start()
+
+    protected virtual void Start()
     {
         rb = GetComponent<Rigidbody>();
         obj = GameObject.Find("PlayerBody");
         anim = obj.GetComponent<Animator>();
+        managerBehavior = ParticalManager.GetComponent<ParticalManagerBehavior>();
 
         GetComponent<PlayerInput>().OnSing += AnimateSing;
         GetComponent<PlayerInput>().OffSing += StopSinging;
@@ -34,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
         if (!singing && canMove && !isDead)
         {
 
-            rb.MovePosition(rb.position + Movement * speed * Time.deltaTime);
+            rb.MovePosition(rb.position + movement * speed * Time.deltaTime);
         }
     }
 
