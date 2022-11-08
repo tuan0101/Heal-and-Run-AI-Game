@@ -85,7 +85,8 @@ public class PlayerController : MonoBehaviour
                 // Singing Animation
                 anim.SetBool("isSing", true);
             }
-            singRange.SetActive(true);
+            singRange
+                .SetActive(true);
             singing = true;
             ParticalManager.SetActive(true);
         }

@@ -30,4 +30,5 @@ public class PlayerHealth : MonoBehaviour
         healthBar.health = myHP / 100f;
         OnDie();
     }
+
 }

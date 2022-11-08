@@ -10,9 +10,6 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerMovement playerMovement;
     public GameObject ParticalManager;
 
-    int myHP = 100;
-    public HealthBar healthBar;
-
     bool isDead = false;
     ParticalManagerBehavior managerBehavior;
 
@@ -25,12 +22,18 @@ public class Player : MonoBehaviour
 
         managerBehavior = ParticalManager.GetComponent<ParticalManagerBehavior>();
 
+        GetComponent<PlayerHealth>().OnDie += HandlePlayerDeath;
         //spawn at a random position each time the game start
         transform.position *= UnityEngine.Random.Range(0.5f, 1.5f);
     }
 
     // Update is called once per frame
     void Update()
+    {
+        
+    }
+
+    void HandlePlayerDeath()
     {
         
     }

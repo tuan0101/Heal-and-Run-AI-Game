@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    bool canMove = true;
+    bool isDead = false;
+    bool canMove = true;   // disable all input while getting hit from enemy
     public float speed = 50f;
     bool singing = false;
 
@@ -22,10 +23,41 @@ public class PlayerMovement : MonoBehaviour
         anim = obj.GetComponent<Animator>();
     }
 
+    private void FixedUpdate()
+    {
+        if (!singing && canMove && !isDead)
+        {
+
+            rb.MovePosition(rb.position + Movement * speed * Time.deltaTime);
+        }
+
+    }
+
     public void AnimateSing()
     {
-        // Singing Animation
         anim.SetBool("isSing", true);
     }
 
+    public void AnimateDead()
+    {
+        canMove = false;
+        isDead = true;
+        anim.SetTrigger("Dead");
+        // Deactive animation from the enemies
+        this.gameObject.tag = "Untagged";
+    }
+
+    public void AnimateGetHit()
+    {
+        canMove = false;
+        anim.SetTrigger("GetHit");
+        Invoke("ReleasePlayer", 0.2f);
+    }
+
+    // Wait for 0.2s after getting a hit
+    // use for Invoke function
+    void ReleasePlayer()
+    {
+        canMove = true;
+    }
 }
