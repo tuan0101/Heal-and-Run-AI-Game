@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -7,7 +6,9 @@ public class PlayerMovement : MonoBehaviour
     bool isDead = false;
     bool canMove = true;   // disable all input while getting hit from enemy
     public float speed = 50f;
+
     bool singing = false;
+    public GameObject singRange;
 
     Rigidbody rb;
     Animator anim;
@@ -15,12 +16,17 @@ public class PlayerMovement : MonoBehaviour
     Vector3 Movement;
     public GameObject ParticalManager;
 
+    public event Action OnStartSing = delegate { };
+    public event Action OnStopSing = delegate { };
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         obj = GameObject.Find("PlayerBody");
         anim = obj.GetComponent<Animator>();
+
+        GetComponent<PlayerInput>().OnSing += AnimateSing;
+        GetComponent<PlayerInput>().OffSing += StopSinging;
     }
 
     private void FixedUpdate()
@@ -30,12 +36,23 @@ public class PlayerMovement : MonoBehaviour
 
             rb.MovePosition(rb.position + Movement * speed * Time.deltaTime);
         }
-
     }
 
-    public void AnimateSing()
+    void AnimateSing()
     {
-        anim.SetBool("isSing", true);
+        if (singing == false)
+        {
+            anim.SetBool("isSing", true);
+            OnStartSing();
+        }
+        EnableSingParticle(true);
+    }
+
+    public void StopSinging()
+    {
+        anim.SetBool("isSing", false);
+        EnableSingParticle(false);
+        OnStopSing();
     }
 
     public void AnimateDead()
@@ -59,5 +76,12 @@ public class PlayerMovement : MonoBehaviour
     void ReleasePlayer()
     {
         canMove = true;
+    }
+
+    void EnableSingParticle(bool value)
+    {
+        singing = value;
+        singRange.SetActive(value);
+        ParticalManager.SetActive(value);
     }
 }

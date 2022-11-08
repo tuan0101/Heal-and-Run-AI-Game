@@ -8,6 +8,7 @@ public class PlayerInput : MonoBehaviour
     public float Sing { get; private set; }
 
     public event Action OnSing = delegate { };
+    public event Action OffSing = delegate { };
 
     // Update is called once per frame
     void Update()
@@ -16,5 +17,6 @@ public class PlayerInput : MonoBehaviour
         Vertical = Input.GetAxisRaw("Vertical");
         Sing = Input.GetAxisRaw("Interact");
         if (Sing != 0) OnSing();
+        else OffSing();
     }
 }

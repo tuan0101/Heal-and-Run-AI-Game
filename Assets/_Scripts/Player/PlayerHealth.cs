@@ -6,7 +6,8 @@ public class PlayerHealth : MonoBehaviour
     int myHP = 100;
     public HealthBar healthBar;
     int damageAmount = 25;
-    public Action OnDie = delegate { };
+    public event Action OnDie = delegate { };
+    public event Action OnHit = delegate { };
 
     // getting attack from the enemies
     void OnCollisionEnter(Collision collision)
@@ -22,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
         myHP -= damage;
         if (myHP <= 0)
             Die();
+        else OnHit();
     }
 
     void Die()

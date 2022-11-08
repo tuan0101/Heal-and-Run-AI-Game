@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerInput), typeof(PlayerAudio), typeof(PlayerMovement))]
 public class Player : MonoBehaviour
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour
         managerBehavior = ParticalManager.GetComponent<ParticalManagerBehavior>();
 
         GetComponent<PlayerHealth>().OnDie += HandlePlayerDeath;
+        GetComponent<PlayerHealth>().OnHit += HandlePlayerGetHit;
         //spawn at a random position each time the game start
         transform.position *= UnityEngine.Random.Range(0.5f, 1.5f);
     }
@@ -35,6 +37,17 @@ public class Player : MonoBehaviour
 
     void HandlePlayerDeath()
     {
-        
+        playerMovement.AnimateDead();
+        Invoke("GameOver", 2f);
+    }
+
+    void HandlePlayerGetHit()
+    {
+        playerMovement.AnimateGetHit();
+    }
+
+    void GameOver()
+    {
+        SceneManager.LoadScene("DefeatScene");
     }
 }

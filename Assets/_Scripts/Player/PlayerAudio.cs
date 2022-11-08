@@ -9,6 +9,8 @@ public class PlayerAudio : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        GetComponent<PlayerMovement>().OnStartSing += PlayASong;
+        GetComponent<PlayerMovement>().OnStopSing += StopPlaySong;
     }
 
     public void PlayASong()
