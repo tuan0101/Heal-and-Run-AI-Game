@@ -3,8 +3,8 @@ using UnityEngine;
 public class PlayerAudio : MonoBehaviour
 {
     AudioSource audioSource;
-    public AudioClip[] songs;
-    public GameObject singRange;
+    [SerializeField] AudioClip[] songs;
+    [SerializeField] GameObject singRange;
 
     private void Start()
     {

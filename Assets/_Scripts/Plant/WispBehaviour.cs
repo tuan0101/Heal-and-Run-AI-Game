@@ -5,12 +5,12 @@ using UnityEngine;
 public class WispBehaviour : MonoBehaviour
 {
     GameObject player;
-    public float orbitRange =.5f;
+    [SerializeField] float orbitRange =.5f;
     
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<PlayerController>().gameObject;
+        player = FindObjectOfType<Player>().gameObject;
     }
 
     // Update is called once per frame

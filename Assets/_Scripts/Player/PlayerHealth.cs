@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    [SerializeField] HealthBar healthBar;
+
     int myHP = 100;
-    public HealthBar healthBar;
     int damageAmount = 25;
+
     public event Action OnDie = delegate { };
     public event Action OnHit = delegate { };
 

@@ -3,24 +3,26 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public bool isDead = false;
+    protected bool isDead = false;
+    protected float speed = 50f;
+    protected Vector3 movement;
+    protected Animator anim;
+
     bool canMove = true;   // disable all input while getting hit from enemy
-    public float speed = 50f;
-
-    bool singing = false;
-    public GameObject singRange;
-
     Rigidbody rb;
-    public Animator anim;
     GameObject obj;
-    public Vector3 movement;
 
-    public GameObject ParticalManager;
-    [HideInInspector]
-    public ParticalManagerBehavior managerBehavior;
+
+    [Header("Sing")]
+    bool singing = false;
+    [SerializeField] GameObject singRange;
+    [SerializeField] GameObject ParticalManager;
+    ParticalManagerBehavior managerBehavior;
 
     public event Action OnStartSing = delegate { };
     public event Action OnStopSing = delegate { };
+
+    public ParticalManagerBehavior ManagerBehavior { get {return managerBehavior; } set { managerBehavior=value; } }
 
     protected virtual void Start()
     {
