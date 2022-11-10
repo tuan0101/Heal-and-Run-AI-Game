@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Un-refactor class
+// was split into PlayerMovement | PlayerInput | PlayerAudio | PlayerHealth | Player
 public class PlayerController : MonoBehaviour
 {
     int myHP = 100;

@@ -5732,30 +5732,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1965981206}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &184569412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 184569407}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e88191b09f93a14981a26413e4ba0e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  healthBar: {fileID: 724058168}
-  ParticalManager: {fileID: 2087638142}
-  songs:
-  - {fileID: 8300000, guid: 7abd5fcfe5ceec446acf12f1b7a0f31f, type: 3}
-  - {fileID: 8300000, guid: b20ec932fcca7e9458877f8f9c24dec0, type: 3}
-  - {fileID: 8300000, guid: b51090782003c29428932dd0bc846889, type: 3}
-  - {fileID: 8300000, guid: e8de56eff9da0a7438a77f8eda89d592, type: 3}
-  - {fileID: 8300000, guid: fd213b45931081c41ac0749aea94de1b, type: 3}
-  - {fileID: 8300000, guid: 1170d9c23805bb7408a835fecee3811c, type: 3}
-  singRange: {fileID: 1063902731}
-  managerBehavior: {fileID: 0}
 --- !u!54 &184569413
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5880,13 +5856,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4fa4397f6b58244781283184b3e9a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDead: 0
-  speed: 50
-  singRange: {fileID: 0}
-  anim: {fileID: 0}
-  movement: {x: 0, y: 0, z: 0}
+  singRange: {fileID: 1063902731}
   ParticalManager: {fileID: 2087638142}
-  managerBehavior: {fileID: 0}
   playerInput: {fileID: 0}
   playerMovement: {fileID: 0}
 --- !u!114 &184569417
@@ -5934,6 +5905,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 724058168}
+--- !u!114 &184569421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184569407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0713ce1763e0a4f40a3249be2697edf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  singRange: {fileID: 1063902731}
+  ParticalManager: {fileID: 2087638142}
 --- !u!1 &275884856
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Terrain : MonoBehaviour
 {
-    [SerializeField] GameObject terrain;
+    [SerializeField] GameObject terrainObject;
     MeshCollider col;
 
 
@@ -13,7 +13,7 @@ public class Terrain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        col = terrain.GetComponent<MeshCollider>();
+        col = terrainObject.GetComponent<MeshCollider>();
 
         // Note: cannot call col.bounds in update()
         minX = col.bounds.min.x;
