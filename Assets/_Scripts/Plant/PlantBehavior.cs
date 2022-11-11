@@ -102,7 +102,7 @@ public class PlantBehavior : InteractableBehavior
         if (other.gameObject.tag == "SingSphere")
         {
             Activate();
-            other.gameObject.GetComponentInParent<PlayerController>().managerBehavior.target = this.gameObject;
+            other.gameObject.GetComponentInParent<PlayerMovement>().ManagerBehavior.target = this.gameObject;
             Invoke("HealedForm", 1);
         }
 

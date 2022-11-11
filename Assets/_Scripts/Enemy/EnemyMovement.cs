@@ -9,13 +9,11 @@ public class EnemyMovement : MonoBehaviour
     protected float distanceToTarget = Mathf.Infinity;
     protected float distanceToFlower = Mathf.Infinity;
     protected EnemyAttack enemyAttack;
-
+    protected GameObject player;
 
     // enemy starting position
     Vector3 enemyPos;
     Vector3 roamPos;
-
-    protected GameObject player;
 
     private void Start()
     {
@@ -28,16 +26,16 @@ public class EnemyMovement : MonoBehaviour
     }
     protected void ChasePlayer()
     {
-        enemyAttack.agent.SetDestination(player.transform.position);
+        enemyAttack.Agent.SetDestination(player.transform.position);
 
         distanceToTarget = Vector3.Distance(player.transform.position, transform.position);
-        if (distanceToTarget < enemyAttack.transfromRange)
+        if (distanceToTarget < enemyAttack.TransfromRange)
         {
-            enemyAttack.roboAnim.SetInteger("Robo", 1);
+            enemyAttack.RoboAnim.SetInteger("Robo", 1);
         }
         else
         {
-            enemyAttack.roboAnim.SetInteger("Robo", 2);
+            enemyAttack.RoboAnim.SetInteger("Robo", 2);
         }
 
     }
@@ -59,9 +57,9 @@ public class EnemyMovement : MonoBehaviour
     protected void Roaming()
     {
         // running animation
-        enemyAttack.roboAnim.SetInteger("Robo", 2);
+        enemyAttack.RoboAnim.SetInteger("Robo", 2);
         // Set the agent to go to the roam position.
-        enemyAttack.agent.SetDestination(roamPos);
+        enemyAttack.Agent.SetDestination(roamPos);
         float reachedPosDistance = 3f;
 
         // if reached roam position, generate a new roam position

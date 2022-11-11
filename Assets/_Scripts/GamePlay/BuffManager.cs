@@ -6,16 +6,16 @@ public class BuffManager : MonoBehaviour
 {
     public GameObject[] SpawnableObjects;
 
-    PlayerController playerController;
+    Player playerController;
     PlantBehavior[] plants;
-    MonsterAI[] monsters;
+    EnemyAttack[] enemies;
     ScoreKeeperBehavior scoreKeeper;
     // Start is called before the first frame update
     void Start()
     {
         plants = FindObjectsOfType<PlantBehavior>();
-        playerController = FindObjectOfType<PlayerController>();
-        monsters = FindObjectsOfType<MonsterAI>();
+        playerController = FindObjectOfType<Player>();
+        enemies = FindObjectsOfType<EnemyAttack>();
         scoreKeeper = FindObjectOfType<ScoreKeeperBehavior>();
     }
 
@@ -48,15 +48,15 @@ public class BuffManager : MonoBehaviour
     //multi player speed
     public void ActivateBuffSpeed()
     {
-        playerController.speed = playerController.speed * 1.3f;
+        playerController.Speed = playerController.Speed * 1.3f;
         StartCoroutine(scoreKeeper.BuffMessage("Player Speed Buff: + 30%"));
     }
     //slow enemy speed 
     public void ActivateEnemySlow()
     {
-        foreach (MonsterAI monster in monsters)
+        foreach (EnemyAttack enemy in enemies)
         {
-            monster.agent.speed = monster.agent.speed * .9f;
+            enemy.Agent.speed = enemy.Agent.speed * .9f;
         }
         StartCoroutine(scoreKeeper.BuffMessage("Enemy Slow Buff: -10%"));
     }

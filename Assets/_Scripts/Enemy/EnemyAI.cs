@@ -5,10 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyAttack), typeof(Terrain), typeof(EnemyMovement))]
 public class EnemyAI : EnemyMovement
 {
-    // For chasing
     [SerializeField] GameObject flower;
-
-    int difLV; // difficult level
 
     // Update is called once per frame
     void Update()
@@ -32,7 +29,7 @@ public class EnemyAI : EnemyMovement
 
     private void EngagePlayer()
     {
-        if (distanceToTarget > enemyAttack.attackRange)
+        if (distanceToTarget > enemyAttack.AttackRange)
         {
             ChasePlayer();
         }
@@ -55,10 +52,10 @@ public class EnemyAI : EnemyMovement
         {
             // if in attk range => immediately attack the player
             distanceToTarget = DistanceToTarget(player);
-            if (distanceToTarget < enemyAttack.attackRange) return true;
+            if (distanceToTarget < enemyAttack.AttackRange) return true;
             // else, check if the player is in this enemy's view
             // (enemy can see the player)
-            if (distanceToTarget < enemyAttack.viewDistance)
+            if (distanceToTarget < enemyAttack.ViewDistance)
             {
                 Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
                 return TargetInView(player);
@@ -72,7 +69,7 @@ public class EnemyAI : EnemyMovement
         Vector3 dirToPlayer = (obj.transform.position - transform.position).normalized;
         float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
 
-        if (angleBetweenGuardAndPlayer < enemyAttack.viewAngle)
+        if (angleBetweenGuardAndPlayer < enemyAttack.ViewAngle)
             return true;
         else
             return false;
@@ -83,9 +80,9 @@ public class EnemyAI : EnemyMovement
         if (flower)
         {
             distanceToFlower = DistanceToTarget(flower);
-            if (distanceToFlower > enemyAttack.agent.stoppingDistance)
+            if (distanceToFlower > enemyAttack.Agent.stoppingDistance)
             {
-                enemyAttack.agent.SetDestination(flower.transform.position);
+                enemyAttack.Agent.SetDestination(flower.transform.position);
 
             }
             else
@@ -120,6 +117,6 @@ public class EnemyAI : EnemyMovement
             return false;
         }
 
-        return distanceToFlower < enemyAttack.chaseRange;
+        return distanceToFlower < enemyAttack.ChaseRange;
     }
 }

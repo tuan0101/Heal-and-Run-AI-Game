@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
 
     public ParticalManagerBehavior ManagerBehavior { get {return managerBehavior; } set { managerBehavior=value; } }
 
+    // public get set
+    public float Speed { get { return speed; } set { speed = value; } }
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody>();

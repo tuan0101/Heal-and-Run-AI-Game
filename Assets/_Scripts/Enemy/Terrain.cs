@@ -7,7 +7,6 @@ public class Terrain : MonoBehaviour
     [SerializeField] GameObject terrainObject;
     MeshCollider col;
 
-
     float minX, maxX, minZ, maxZ;
 
     // Start is called before the first frame update

@@ -5,39 +5,42 @@ using UnityEngine.AI;
 
 public class EnemyAttack : MonoBehaviour
 {
+    int difLV; // difficult level
+
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] GameObject firePoint;
-    public float chaseRange = 20f;
-    public float transfromRange = 13f;
+    [SerializeField] Light spotLight;
 
-    public float attackRange = 8f;
-    public float fireRate = 1f;
-    public float fireDelay = 1f;
+    public float ChaseRange { get; set; } = 20f;
+    public float TransfromRange { get; set; } = 13f;
+
+    public float AttackRange { get; set; } = 8f;
+    public float FireRate { get; set; } = 1f;
+    public float FireDelay { get; set; } = 1f;
 
     //enemy vision
-    public float viewAngle;
-    public float viewDistance;
+    public float ViewAngle { get; set; }
+    public float ViewDistance { get; set; }
 
-    public Light spotLight;
-    public Animator roboAnim;
+    public Animator RoboAnim { get; set; }
 
-    public NavMeshAgent agent;
-    int difLV; // difficult level
+    public NavMeshAgent Agent { get; set; }
+
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        roboAnim = GetComponentInChildren<Animator>();
+        Agent = GetComponent<NavMeshAgent>();
+        RoboAnim = GetComponentInChildren<Animator>();
 
-        viewAngle = spotLight.spotAngle - 10f;
+        ViewAngle = spotLight.spotAngle - 10f;
 
         SetLevelDifficulty();
     }
 
     public void Attack(GameObject obj)
     {
-        roboAnim.SetInteger("Robo", 1);
+        RoboAnim.SetInteger("Robo", 1);
 
         // rotate to face the target
         Quaternion targetRotation = Quaternion.LookRotation(obj.transform.position - transform.position);
@@ -45,15 +48,15 @@ public class EnemyAttack : MonoBehaviour
 
         if (TargetInView(obj))
         {
-            if (Time.time >= fireRate)
+            if (Time.time >= FireRate)
             {
                 // fire
                 StartCoroutine(StopMoving());
-                roboAnim.SetInteger("Robo", 0);
-                fireRate = Time.time + fireDelay;
+                RoboAnim.SetInteger("Robo", 0);
+                FireRate = Time.time + FireDelay;
                 Invoke("Fire", 0.5f);
             }
-            agent.enabled = true;
+            Agent.enabled = true;
         }
     }
 
@@ -62,7 +65,7 @@ public class EnemyAttack : MonoBehaviour
         Vector3 dirToPlayer = (obj.transform.position - transform.position).normalized;
         float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
 
-        if (angleBetweenGuardAndPlayer < viewAngle)
+        if (angleBetweenGuardAndPlayer < ViewAngle)
             return true;
         else
             return false;
@@ -70,9 +73,9 @@ public class EnemyAttack : MonoBehaviour
 
     IEnumerator StopMoving()
     {
-        agent.enabled = false;
+        Agent.enabled = false;
         yield return new WaitForSeconds(0.5f);
-        agent.enabled = true;
+        Agent.enabled = true;
         //agent.isStopped = true;
         //yield return new WaitForSeconds(0.5f);
         //agent.isStopped = false;
@@ -86,11 +89,11 @@ public class EnemyAttack : MonoBehaviour
     void SetLevelDifficulty()
     {
         difLV = MainMenu.level;
-        chaseRange += difLV * 2f;
-        attackRange += difLV / 5f;
-        transfromRange += difLV / 5f;
-        fireDelay -= difLV / 25f;
-        viewAngle += difLV;
-        agent.speed += difLV / 2f;
+        ChaseRange += difLV * 2f;
+        AttackRange += difLV / 5f;
+        TransfromRange += difLV / 5f;
+        FireDelay -= difLV / 25f;
+        ViewAngle += difLV;
+        Agent.speed += difLV / 2f;
     }
 }
